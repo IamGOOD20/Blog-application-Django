@@ -16,9 +16,9 @@ class Post(models.Model):
         related_name='blog_posts'
     )
     body = models.TextField()
-    publish = models.TimeField(default=timezone.now)
-    created = models.TimeField(auto_now_add=True)
-    updated = models.TimeField(auto_now=True)
+    publish = models.DateTimeField(default=timezone.now)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
     status = models.CharField(
         max_length=2,
         choices=Status,
