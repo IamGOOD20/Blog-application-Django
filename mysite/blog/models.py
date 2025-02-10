@@ -4,13 +4,13 @@ from django.utils import timezone
 
 
 class PublishedManager(models.Manager):
-    def query_set(self):
+    def get_queryset(self):
         return (
             super().get_queryset().filter(status=Post.Status.PUBLISHED)
         )
 
-class Post(models.Model):
 
+class Post(models.Model):
     class Status(models.TextChoices):
         DRAFT = 'DF', 'Draft'
         PUBLISHED = 'PB', 'Published'
@@ -22,12 +22,10 @@ class Post(models.Model):
         on_delete=models.CASCADE,
         related_name='blog_posts'
     )
-
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-
     status = models.CharField(
         max_length=2,
         choices=Status,
@@ -35,15 +33,14 @@ class Post(models.Model):
     )
 
     objects = models.Manager()  # The default manager.
-    published = PublishedManager()  # Our custom manager
+    published = PublishedManager()  # Our custom manager.
 
     class Meta:
         ordering = ['-publish']
         indexes = [
-            models.Index(fields=['-publish'])
+            models.Index(fields=['-publish']),
         ]
 
     def __str__(self):
         return self.title
-
 
