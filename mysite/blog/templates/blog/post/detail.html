@@ -1,4 +1,5 @@
 {% extends "blog/base.html" %}
+{% load static %}
 
 {% block title %}
 {{ posts.title }}
@@ -10,4 +11,7 @@
     Published {{ posts.publish }} by {{ posts.author }}
   </p>
   {{ posts.body|linebreaks }}
+  <p>
+    <a href="{% url 'blog:post_share' posts.id %}">Share this post</a>
+  </p>
 {% endblock %}
